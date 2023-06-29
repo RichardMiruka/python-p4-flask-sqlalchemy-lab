@@ -33,6 +33,18 @@ def animal_by_id(id):
 
 @app.route('/zookeeper/<int:id>')
 def zookeeper_by_id(id):
+    zookeeper = Zookeeper.query.get(id)
+    if zookeeper:
+        response = f'<h2>Zookeeper: {zookeeper.name}</h2>'
+        response += f'<ul><li>Birthday: {zookeeper.birthday}</li>'
+        response += '<li>Animals:</li><ul>'
+        for animal in zookeeper.animals:
+            response += f'<li>{animal.name} - {animal.species}</li>'
+        response += '</ul><ul>'
+        return response 
+    else:
+        return f'Zookeeper with ID {id} does not exist.'
+        
     return ''
 
 @app.route('/enclosure/<int:id>')
