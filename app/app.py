@@ -49,7 +49,18 @@ def zookeeper_by_id(id):
 
 @app.route('/enclosure/<int:id>')
 def enclosure_by_id(id):
-    return ''
+    enclosure = Enclosure.query.get(id)
+    if enclosure:
+        response = f'<h2>Enclosure: {enclosure.environment}</h2>'
+        response += f'<ul><li>Open to Visitors: {enclosure.open_visitors}</li>'
+        response += '<li>Animals:</li><ul>'
+        for animal in enclosure.animals:
+            response += f'<li>{animal.name} - {animal.species}</li>'
+            response += '</ul></ul>'
+            return response
+    else:
+        return f'Enclosure with ID {id} not found'
+    
 
 
 if __name__ == '__main__':
