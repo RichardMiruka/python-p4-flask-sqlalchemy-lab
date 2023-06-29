@@ -19,7 +19,17 @@ def home():
 
 @app.route('/animal/<int:id>')
 def animal_by_id(id):
-    return ''
+    animal = Animal.query.get(id)
+    if animal:
+        response = f'<h2>Animal: {animal.name}</h2>'
+        response += f'<ul><li>Species: {animal.species}</li>'
+        response += f'<li>Zookeper: {animal.zookeper.name}</li>'
+        response += f'<li>Enclosure: {animal.enclosure.environment}</li>'
+        return response
+    
+    else:
+        return f'Animal with ID{id} not found'
+    
 
 @app.route('/zookeeper/<int:id>')
 def zookeeper_by_id(id):
